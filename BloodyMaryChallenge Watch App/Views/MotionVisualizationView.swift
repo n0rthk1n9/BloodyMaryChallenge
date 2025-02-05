@@ -1,20 +1,10 @@
-//
-//  ContentView.swift
-//  BloodyMaryChallenge Watch App
-//
-//  Created by Jan Armbrust on 03.02.2025.
-//
-
 import SwiftUI
 
-struct ContentView: View {
-    @StateObject private var motionManager = MotionManager()
-
+struct TouchVisualizationView: View {
+    @ObservedObject var motionManager: MotionService
+    
     var body: some View {
         ZStack {
-            // A dark background for contrast.
-            Color.black.edgesIgnoringSafeArea(.all)
-
             // X-axis circle (red)
             Circle()
                 .fill(Color.red)
@@ -22,7 +12,7 @@ struct ContentView: View {
                 .scaleEffect(motionManager.xScale)
                 .offset(motionManager.xOffset)
                 .opacity(motionManager.xOpacity)
-
+            
             // Y-axis circle (green)
             Circle()
                 .fill(Color.green)
@@ -30,7 +20,7 @@ struct ContentView: View {
                 .scaleEffect(motionManager.yScale)
                 .offset(motionManager.yOffset)
                 .opacity(motionManager.yOpacity)
-
+            
             // Z-axis circle (blue)
             Circle()
                 .fill(Color.blue)
@@ -40,8 +30,4 @@ struct ContentView: View {
                 .opacity(motionManager.zOpacity)
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

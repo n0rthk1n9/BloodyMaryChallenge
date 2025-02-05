@@ -8,7 +8,7 @@
 import CoreBluetooth
 import SwiftUI
 
-final class PeripheralManager: NSObject, ObservableObject, CBPeripheralManagerDelegate {
+final class PeripheralService: NSObject, ObservableObject, CBPeripheralManagerDelegate {
     private var peripheralManager: CBPeripheralManager!
     
     override init() {
@@ -18,8 +18,6 @@ final class PeripheralManager: NSObject, ObservableObject, CBPeripheralManagerDe
         // Assign the delegate manually.
         peripheralManager.delegate = self
     }
-    
-    // MARK: - CBPeripheralManagerDelegate
     
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         if peripheral.state == .poweredOn {

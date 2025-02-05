@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import HealthKit
 
 @main
 struct BloodyMaryChallenge_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            DistanceView()
+            MainView()
         }
     }
 }

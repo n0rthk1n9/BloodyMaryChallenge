@@ -1,5 +1,5 @@
 //
-//  MotionManager.swift
+//  MotionService.swift
 //  BloodyMaryChallenge Watch App
 //
 //  Created by Jan Armbrust on 04.02.2025.
@@ -10,7 +10,7 @@ import CoreMotion
 import WatchKit
 
 @MainActor
-class MotionManager: ObservableObject {
+class MotionService: ObservableObject {
     // Raw accelerometer values.
     @Published var x: Double = 0
     @Published var y: Double = 0
@@ -37,22 +37,34 @@ class MotionManager: ObservableObject {
     private var lastYHapticTime = Date.distantPast
     private var lastZHapticTime = Date.distantPast
 
-    init() {
+    // Add new property for proximity threshold
+    private let proximityThreshold: Double = 1.0 // 1 meter threshold
+    
+    // Add BluetoothManager reference
+    private var bluetoothManager: BluetoothService
+
+    init(bluetoothManager: BluetoothService) {
+        self.bluetoothManager = bluetoothManager
         startUpdates()
     }
 
-    // MARK: - Haptic Function
-
-    /// Triggers haptic feedback of the specified type.
+    // Triggers haptic feedback of the specified type.
     private func triggerHaptic(_ type: WKHapticType) {
-        WKInterfaceDevice.current().play(type)
+        // Only trigger haptic if a nearby device is detected
+        if let otherPeripheral = bluetoothManager.discoveredPeripherals.first(where: {
+            bluetoothManager.peripheralLocalNames[$0.identifier] == "MyWatchApp"
+        }),
+        let rssi = bluetoothManager.peripheralRSSI[otherPeripheral.identifier] {
+            let distance = bluetoothManager.estimatedDistance(for: rssi)
+            if distance <= proximityThreshold {
+                WKInterfaceDevice.current().play(type)
+            }
+        }
     }
 
-    // MARK: - Animation Function
-
-    /// Animates a pulse effect (scale up and fade in, then revert) for a given axis.
-    private func animatePulse(scaleKeyPath: ReferenceWritableKeyPath<MotionManager, CGFloat>,
-                                opacityKeyPath: ReferenceWritableKeyPath<MotionManager, Double>) async {
+    // Animates a pulse effect (scale up and fade in, then revert) for a given axis.
+    private func animatePulse(scaleKeyPath: ReferenceWritableKeyPath<MotionService, CGFloat>,
+                                opacityKeyPath: ReferenceWritableKeyPath<MotionService, Double>) async {
         withAnimation(.easeOut(duration: 0.2)) {
             self[keyPath: scaleKeyPath] = 1.5
             self[keyPath: opacityKeyPath] = 1.0
@@ -65,17 +77,13 @@ class MotionManager: ObservableObject {
         }
     }
 
-    // MARK: - Combined Feedback Function
-
-    /// Triggers both haptic and animation feedback.
+    // Triggers both haptic and animation feedback.
     private func triggerFeedback(hapticType: WKHapticType,
-                                 scaleKeyPath: ReferenceWritableKeyPath<MotionManager, CGFloat>,
-                                 opacityKeyPath: ReferenceWritableKeyPath<MotionManager, Double>) async {
+                                 scaleKeyPath: ReferenceWritableKeyPath<MotionService, CGFloat>,
+                                 opacityKeyPath: ReferenceWritableKeyPath<MotionService, Double>) async {
         triggerHaptic(hapticType)
         await animatePulse(scaleKeyPath: scaleKeyPath, opacityKeyPath: opacityKeyPath)
     }
-
-    // MARK: - Motion Updates
 
     func startUpdates() {
         guard motionManager.isAccelerometerAvailable else {

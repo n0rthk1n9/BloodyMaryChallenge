@@ -312,6 +312,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "BloodyMaryChallenge Watch App/BloodyMaryChallenge Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BloodyMaryChallenge Watch App/Preview Content\"";
@@ -320,6 +321,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BloodyMaryChallenge;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and communicate with nearby devices for distance estimation.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We have to read your pulse to give you a proper way of visiualization";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We have to read your pulse to give you a proper way of visiualization";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -343,6 +346,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "BloodyMaryChallenge Watch App/BloodyMaryChallenge Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BloodyMaryChallenge Watch App/Preview Content\"";
@@ -351,6 +355,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BloodyMaryChallenge;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and communicate with nearby devices for distance estimation.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We have to read your pulse to give you a proper way of visiualization";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We have to read your pulse to give you a proper way of visiualization";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (

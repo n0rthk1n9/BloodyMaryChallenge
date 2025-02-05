@@ -1,5 +1,5 @@
 //
-//  BluetoothManager.swift
+//  BluetoothService.swift
 //  BloodyMaryChallenge Watch App
 //
 //  Created by Jan Armbrust on 04.02.2025.
@@ -9,7 +9,7 @@ import Foundation
 import CoreBluetooth
 import SwiftUI
 
-final class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate {
+final class BluetoothService: NSObject, ObservableObject, CBCentralManagerDelegate {
     private var centralManager: CBCentralManager!
     
     // Store discovered peripherals, their RSSI, and their advertised local names.
@@ -22,8 +22,8 @@ final class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelega
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
-    /// Convert an RSSI value to an estimated distance (in meters).
-    /// This formula is rough and should be calibrated for your environment.
+    // Convert an RSSI value to an estimated distance (in meters).
+    // This formula is rough and should be calibrated for your environment.
     func estimatedDistance(for rssi: NSNumber) -> Double {
         let measuredPower: Double = -59   // Expected RSSI at 1 meter (adjust as needed)
         let environmentalFactor: Double = 2.0 // Typical value in free space.
@@ -31,8 +31,6 @@ final class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelega
         guard rssiValue != 0 else { return -1.0 }
         return pow(10.0, (measuredPower - rssiValue) / (10 * environmentalFactor))
     }
-    
-    // MARK: - CBCentralManagerDelegate
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
