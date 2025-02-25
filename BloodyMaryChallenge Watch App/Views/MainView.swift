@@ -42,7 +42,7 @@ struct MainView: View {
                         PulsingHeartView(
                             heartRateManager: heartRateService,
                             pulseArr: $pulseArr,
-                            message: "Get\nCloser!"
+                            message: "Get\nCloser to Carolina!"
                         )
                     }
                 } else {
